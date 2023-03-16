@@ -9,7 +9,7 @@ urlpatterns = [
     path('', include('core.urls')),
     path('account/', include('account.urls')),
     path('brands/', include('brands.urls')),
-    #path('reviews/', include('reviews.urls')),
+    path('reviews/', include('reviews.urls')),
   
     path('api/', include('rest_framework.urls'))
 

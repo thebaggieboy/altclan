@@ -7,6 +7,10 @@ from django.conf import settings
 User = settings.AUTH_USER_MODEL
 
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User
+    serializer_class = UserSerializer
+
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer

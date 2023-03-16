@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import Brand, Order, Cart, Merchandise, BrandProfile, MerchandisesList, Leads
+from .models import Brand, Order, Cart, Merchandise, BrandProfile, MerchandiseGallery, Leads
 from .serializers import(
       OrderSerializer,
       CartSerializer,
@@ -8,7 +8,7 @@ from .serializers import(
       MerchandiseSerializer,
       BrandProfileSerializer,
       BrandSerializer,
-      MerchandiseListSerializer
+      MerchandiseGallerySerializer
 )
 
 
@@ -16,9 +16,9 @@ class MerchandiseViewSet(viewsets.ModelViewSet):
     queryset = Merchandise.objects.all()
     serializer_class = MerchandiseSerializer
 
-class MerchandiseListViewSet(viewsets.ModelViewSet):
-    queryset = MerchandisesList.objects.all()
-    serializer_class = MerchandiseListSerializer
+class MerchandiseGalleryViewSet(viewsets.ModelViewSet):
+    queryset = MerchandiseGallery.objects.all()
+    serializer_class = MerchandiseGallerySerializer
 
 class LeadsViewSet(viewsets.ModelViewSet):
     queryset = Leads.objects.all()

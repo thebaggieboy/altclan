@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import BrandProfile, Brand, Merchandise, Cart, Order, MerchandisesList, BillingAddress, MerchandiseGallery
+from .models import BrandProfile, Brand, Merchandise, Cart, Order,  BillingAddress, MerchandiseGallery
+from reviews.models import Reviews
 # Register your models here.
 
 class BrandInline(admin.TabularInline):
@@ -13,22 +14,30 @@ class BrandAdmin(admin.ModelAdmin):
 
 class BrandProfileAdmin(admin.ModelAdmin):
     #inlines = [BrandInline]
-    list_display = ['brand_name', 'brand_logo', 'brand_bio', 'date_created', 'slug']
-    list_filter = ['-date_created']
+    list_display = ['brand', 'display_picture', 'email_address', 'slug']
+
 
 class MerchandiseAdmin(admin.ModelAdmin):
     #inlines = [BrandInline]
     list_display = ['brand', 'merchandise_name', 'merchandise_color', 'merchandise_size', 'display_image', 'labels',  'price', 'delivery_cost', 'slug']
 
+class BillingAddressAdmin(admin.ModelAdmin):
+    list_display = ['country', 'street_address', 'city', 'state', 'zip']
 
-admin.site.register(BillingAddress)
+
+class MerchandiseGalleryAdmin(admin.ModelAdmin):
+    list_display = ['image_1', 'image_2', 'image_3', 'image_4',]
+
+admin.site.register(BillingAddress, BillingAddressAdmin)
 admin.site.register(Brand, BrandAdmin)
-admin.site.register(BrandProfile)
+admin.site.register(BrandProfile, BrandProfileAdmin)
 admin.site.register(Merchandise, MerchandiseAdmin)
-admin.site.register(MerchandisesList)
-admin.site.register(MerchandiseGallery)
+
+admin.site.register(MerchandiseGallery, MerchandiseGalleryAdmin)
 admin.site.register(Cart)
 admin.site.register(Order)
+admin.site.register(Reviews)
+
 
 
 

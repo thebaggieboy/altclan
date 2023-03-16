@@ -74,19 +74,6 @@ class MerchandiseGallery(models.Model):
         return f'Merchandise Name : {self.merchandise_name}'
  
 
-class MerchandisesList(models.Model):
-    slug = models.SlugField(null=True, blank=True, default='')
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, default='', null=True, blank=True)
-    merchandises = models.ManyToManyField(Merchandise)
-
-
-    def __str__(self):
-        return f'{self.brand} Mechandises List'
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(f'merchandises-list-{self.brand}')
-        return super().save(*args, **kwargs)
 
 class Leads(models.Model):
     brand_name = models.CharField(max_length=250, null=True, blank=True)
@@ -102,7 +89,7 @@ class Leads(models.Model):
         return super().save(*args, **kwargs)
 # ProductOrder, these are the items that have been
 class BillingAddress(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    country = models.CharField(max_length=250, default='')
     street_address = models.CharField(max_length=250, default='')
     city = models.CharField(max_length=250, default='')
     state = models.CharField(max_length=250, default='')
