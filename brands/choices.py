@@ -11,41 +11,22 @@ GENDER = (
 COMMUNITY_TYPE = (
     ('Clothing and Apparel', 'Clothing and Apparel'),
     ('Accessories', 'Accessories'),
-    ('Backpacks and Bags', 'Backpacks and Bags'),
     ('Arts', 'Arts'),
     ('Footwears & Canvas', 'Footwears & Canvas'),
 )
-
-APPAREL_COLLECTION = (
-    ('Shirts', 'Shirts'),
+CLOTHING_COLLECTION = (
+    ('Tops', 'Tops'),
     ('Pants', 'Pants'),
-    ('Bottom', 'Bottom'),
-    ('Outwear', ''),
+    ('Sweaters', 'Sweaters'),
+    ('T-Shirts', 'T-Shirts'),
+    ('Jackets', 'Jackets'),
 )
 
-SHIRT_COLLECTION = (
-    ('Shirts'),
-    ('Pants'),
-    ('Bottom'),
-    ('Outwear'),
-)
-
-PANTS_COLLECTION = (
-    ('Shirts'),
-    ('Pants'),
-    ('Bottom'),
-    ('Outwear'),
-)
-
-BOTTOM_COLLECTION = (
-    ('Shirts'),
-    ('Pants'),
-    ('Bottom'),
-    ('Outwear'),
-)
-OUTWEAR_COLLECTION = (
-    ('Shirts'),
-    ('Pants'),
-    ('Bottom'),
-    ('Outwear'),
+ACCESSORIES_COLLECTIONS = (
+    ('Watches', 'Watches'),
+    ('Wallets', 'Wallets'),
+    ('Bags', 'Bags'),
+    ('Sunglasses', 'Sunglasses'),
+    ('Hats and Caps', 'Hats and Caps'),
+    ('Belts', 'Belts'),
 )

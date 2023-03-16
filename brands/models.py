@@ -4,15 +4,15 @@ from django.template.defaultfilters import slugify
 from .display import LABEL_DISPLAY, COLLECTION_DISPLAY, COMMUNITY_TYPE_DISPLAY
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
-from .choices import STATUS, GENDER
+from .choices import STATUS, GENDER, COMMUNITY_TYPE
 
 class Brand(models.Model):
+    username = models.CharField(max_length=250)
     brand_name = models.CharField(max_length=250, default='')
     brand_logo = models.ImageField(upload_to='Brand Logos', default='')
     brand_bio = models.TextField(default='')
-    brand_type = models.CharField(choices=COMMUNITY_TYPE_DISPLAY, default='', max_length=250)
+    brand_type = models.CharField(choices=COMMUNITY_TYPE, default='', max_length=250)
     date_created = models.DateTimeField(default=timezone.now())
-    slug = models.SlugField(null=True, blank=True, default='')
 
     def __str__(self):
         return f'{self.brand_name} Brand'
@@ -22,6 +22,24 @@ class Brand(models.Model):
             self.slug = slugify(f'{self.brand_name}')
         return super().save(*args, **kwargs)
 
+class BrandProfile(models.Model):
+    brand = models.OneToOneField(Brand, on_delete=models.CASCADE, related_name='brand_profile', null=True, blank=True)
+    display_picture = models.ImageField(upload_to='Brands/Display Picture', default='')
+    merchandises = models.ManyToManyField('Merchandise')
+    mobile_number = models.CharField(max_length=250, default='')
+    email_address = models.CharField(max_length=250, default='')
+    address = models.ForeignKey('BillingAddress', on_delete=models.CASCADE, null=True, blank=True)
+    slug = models.SlugField(null=True, blank=True, default='')
+
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(f'{self.brand}')
+        return super().save(*args, **kwargs)
+    
+    def __str__(self):
+        return f'{self.brand} Profile'
+
 
 
 class Merchandise(models.Model):
@@ -29,14 +47,12 @@ class Merchandise(models.Model):
     merchandise_name = models.CharField(max_length=250, default='')
     merchandise_color = models.CharField(max_length=250, default='')
     merchandise_size = models.CharField(max_length=250, default='')
-    merchandise_image = models.ImageField(upload_to='Merch Image', default='')
-    labels = models.CharField(max_length=250, choices=LABEL_DISPLAY, default='None')
-    collection = models.CharField(max_length=250, choices=COLLECTION_DISPLAY,
-                                        default='Choose your desired collection')
+    display_image = models.ImageField(upload_to='Merch Image', default='')
+    labels = models.CharField(max_length=250, choices=LABEL_DISPLAY, default='')
     price = models.CharField(max_length=250, default='')
     delivery_cost = models.CharField(max_length=250, default='', null=True, blank=True)
-    slug = models.SlugField(null=True, blank=True, default='')
-
+    images = models.ManyToManyField('MerchandiseGallery')
+    slug = models.SlugField()
 
     def __str__(self):
         return f'Merchandise Name : {self.merchandise_name}'
@@ -45,6 +61,18 @@ class Merchandise(models.Model):
         if not self.slug:
             self.slug = slugify(f'{self.brand} {self.merchandise_name} {self.merchandise_size} {self.merchandise_color}')
         return super().save(*args, **kwargs)
+
+class MerchandiseGallery(models.Model):
+    image_1 = models.ImageField(upload_to='Merch Image', default='')
+    image_2 = models.ImageField(upload_to='Merch Image', default='')
+    image_3 = models.ImageField(upload_to='Merch Image', default='')
+    image_4 = models.ImageField(upload_to='Merch Image', default='')
+    image_5 = models.ImageField(upload_to='Merch Image', default='', null=True, blank=True)
+    image_6 = models.ImageField(upload_to='Merch Image', default='', null=True, blank=True)
+
+    def __str__(self):
+        return f'Merchandise Name : {self.merchandise_name}'
+ 
 
 class MerchandisesList(models.Model):
     slug = models.SlugField(null=True, blank=True, default='')
@@ -83,19 +111,6 @@ class BillingAddress(models.Model):
     def __str__(self):
         return f'{self.user}'
 # Inherits from brand
-class BrandProfile(models.Model):
-    brand = models.OneToOneField(Brand, on_delete=models.CASCADE, related_name='brand_profile', null=True, blank=True)
-    merchandises = models.ManyToManyField(Merchandise)
-    mobile_number = models.CharField(max_length=250, default='')
-    email_address = models.CharField(max_length=250, default='')
-    address = models.ForeignKey('BillingAddress', on_delete=models.CASCADE, null=True, blank=True)
-
-    def save(self, *args, **kwargs):
-        return super().save(*args, **kwargs)
-
-    def __str__(self):
-        return f'{self.brand} Profile'
-
 
 class Gallery(models.Model):
     pass

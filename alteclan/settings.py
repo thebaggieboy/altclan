@@ -33,10 +33,7 @@ INSTALLED_APPS = [
     'reviews',
     'allauth',
     'rest_framework',
-    'django_filters',
     'corsheaders',
-    'django_extensions',
-    'debug_toolbar',
     'crispy_forms'
 ]
 
