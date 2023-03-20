@@ -12,7 +12,7 @@ class BrandSerializer(serializers.HyperlinkedModelSerializer):
 class BrandProfileSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BrandProfile
-        fields = ['mobile_number', 'email_address', 'merchandises', 'address']
+        fields = ['brand', 'mobile_number', 'email_address', 'merchandises', 'address']
 
 
 class LeadsSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,7 +26,7 @@ class MerchandiseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Merchandise
         fields = [
-            'brand', 'merchandise_name', 'merchandise_color', 'merchandise_image', 'merchandise_size', 'labels', 'delivery_cost', 'price'
+            'brand', 'merchandise_name', 'merchandise_size', 'labels', 'delivery_cost', 'price'
         ]
 
 class MerchandiseGallerySerializer(serializers.HyperlinkedModelSerializer):

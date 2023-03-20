@@ -13,6 +13,7 @@ class Brand(models.Model):
     brand_bio = models.TextField(default='')
     brand_type = models.CharField(choices=COMMUNITY_TYPE, default='', max_length=250)
     date_created = models.DateTimeField(default=timezone.now())
+    slug = models.SlugField(null=True, blank=True, default='')
 
     def __str__(self):
         return f'{self.brand_name} Brand'
@@ -43,7 +44,7 @@ class BrandProfile(models.Model):
 
 
 class Merchandise(models.Model):
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    brand = models.OneToOneField(Brand, on_delete=models.CASCADE,  null=True, blank=True)
     merchandise_name = models.CharField(max_length=250, default='')
     merchandise_color = models.CharField(max_length=250, default='')
     merchandise_size = models.CharField(max_length=250, default='')
@@ -51,7 +52,7 @@ class Merchandise(models.Model):
     labels = models.CharField(max_length=250, choices=LABEL_DISPLAY, default='')
     price = models.CharField(max_length=250, default='')
     delivery_cost = models.CharField(max_length=250, default='', null=True, blank=True)
-    images = models.ManyToManyField('MerchandiseGallery')
+    #images = models.ManyToManyField('MerchandiseGallery')
     slug = models.SlugField()
 
     def __str__(self):
@@ -63,6 +64,7 @@ class Merchandise(models.Model):
         return super().save(*args, **kwargs)
 
 class MerchandiseGallery(models.Model):
+    merchandise = models.OneToOneField(Merchandise, on_delete=models.CASCADE, related_name='merchandise_gallery', null=True, blank=True)
     image_1 = models.ImageField(upload_to='Merch Image', default='')
     image_2 = models.ImageField(upload_to='Merch Image', default='')
     image_3 = models.ImageField(upload_to='Merch Image', default='')
@@ -71,7 +73,7 @@ class MerchandiseGallery(models.Model):
     image_6 = models.ImageField(upload_to='Merch Image', default='', null=True, blank=True)
 
     def __str__(self):
-        return f'Merchandise Name : {self.merchandise_name}'
+        return f'Merchandise Name : {self.merchandise}'
  
 
 

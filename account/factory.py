@@ -1,25 +1,15 @@
-import factory 
-from django.conf import settings
-from factory.faker import faker
-from .models import Profile, CustomUser
+from factory.django import DjangoModelFactory
+from factory.faker import Faker
+from factory import Sequence, PostGenerationMethodCall, sequence
 
-User = settings.AUTH_USER_MODEL
-FAKE = faker.Faker()
+class UserFactory(DjangoModelFactory):
+    email = Faker('email')
+    password = PostGenerationMethodCall('set_password', 'secret')
 
-class UserFactory(factory.django.DjangoModelFactory):
+    #username = 
     class Meta:
-        model = User
-    email = factory.Faker('email')
-
-class ProfileFactory(factory.django.DjangoModelFactory):
-    class Meta:
-        model = Profile
-    first_name = factory.Faker('first_name')
-    last_name = factory.Faker('last_name')
-    #email_address = factory.Faker('email')
-    mobile_number = factory.Faker('phone_number')
-    #user = factory.SubFactory(UserFactory)
-
+        model = 'account.CustomUser'
+        #django_get_or_create('email')
 
 
 

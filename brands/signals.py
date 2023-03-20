@@ -15,5 +15,17 @@ def save_brand_profile(sender, instance, **kwargs):
     print("Brand Profile saved!")
 
 
+@receiver(post_save, sender=Merchandise)
+def create_merchandise_profile(sender, instance, created, **kwargs):
+    if created:
+        MerchandiseGallery.objects.create(merchandise=instance)
+        print("New Merch Gallery has been created")
+
+@receiver(post_save, sender=Merchandise)
+def save_merchandise_profile(sender, instance, **kwargs):
+    instance.merchandise_gallery.save()
+    print("Merchandise Gallery saved!")
+
+
 
 
