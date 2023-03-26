@@ -4,11 +4,11 @@ from .serializers import UserSerializer, ProfileSerializer
 from .models import Profile, CustomUser
 
 from django.conf import settings
-User = settings.AUTH_USER_MODEL
+#User = settings.AUTH_USER_MODEL
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
 class ProfileViewSet(viewsets.ModelViewSet):
